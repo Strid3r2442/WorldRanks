@@ -1,9 +1,9 @@
 [application]
 
 [web.app]
-
+base_path = "WorldRanks"
 # HTML title tag content
-title = "world-ranks"
+title = "WorldRanks"
 
 # include `assets` in web platform
 [web.resource]
