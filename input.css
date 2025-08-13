@@ -1,0 +1,18 @@
+@import "tailwindcss";
+@source "./src/**/*.{rs,html,css}";
+
+@theme {
+	--color-darker: oklch(0.2295 0.0049 248.04);
+	--color-dark: oklch(0.2881 0.0101 260.71);
+	--color-interact: oklch(0.621 0.1742 263.72);
+	--color-light: oklch(0.5515 0.0215 265.86);
+	--color-lighter: oklch(0.8722 0.0076 260.73);
+}
+
+#main {
+	color: var(--color-lighter);
+	background-color: var(--color-darker);
+	min-height: 100vh;
+	font-family: "Be Vietnam Pro";
+	font-weight: 500;
+}
