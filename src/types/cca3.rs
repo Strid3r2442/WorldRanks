@@ -1,8 +1,8 @@
 use std::fmt;
 use std::str::FromStr;
-use serde::{Serialize, Deserialize, Deserializer};
+use serde::{Deserialize, Deserializer};
 
-#[derive(Debug, Copy, Clone, PartialEq, Serialize)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub struct CCA3([u8; 3]);
 
 #[derive(Debug)]

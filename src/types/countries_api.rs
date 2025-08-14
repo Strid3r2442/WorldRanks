@@ -1,27 +1,27 @@
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize};
 use std::collections::HashMap;
 use crate::types::{CCA3, Region};
 
-#[derive(Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Deserialize, Clone, PartialEq)]
 pub struct Name {
 	pub common: String,
 	pub official: String,
 }
 
-#[derive(Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Deserialize, Clone, PartialEq)]
 pub struct Currency {
 	pub symbol: String,
 	pub name: String,
 }
 
-#[derive(Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Deserialize, Clone, PartialEq)]
 pub struct Flags {
 	pub png: String,
 	pub svg: String,
 	pub alt: Option<String>,
 }
 
-#[derive(Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Deserialize, Clone, PartialEq)]
 pub struct Country {
 	pub name: Name,
 	pub currencies: Option<HashMap<String, Currency>>,
@@ -36,7 +36,7 @@ pub struct Country {
 	pub flags: Flags,
 }
 
-#[derive(Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Deserialize, Clone, PartialEq)]
 pub struct CountryOverview {
 	pub name: Name,
 	pub cca3: CCA3,
@@ -51,7 +51,7 @@ pub struct CountryOverview {
 	pub flags: Flags,
 }
 
-#[derive(Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Deserialize, Clone, PartialEq)]
 pub struct NeighbouringCountry {
 	pub name: Name,
 	pub flags: Flags,

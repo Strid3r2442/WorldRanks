@@ -1,6 +1,7 @@
 use std::str::FromStr;
 use std::collections::HashMap;
 use dioxus::prelude::*;
+use gloo_net::http::Request;
 use strum::IntoEnumIterator;
 use crate::{
 	types::{
@@ -60,7 +61,7 @@ fn filter_data(countries: &[CountryOverview], queries: &[FilterQuery]) -> Vec<Co
 }
 
 #[component]
-pub fn CountryList() -> Element {
+pub fn CountryList(segments: Vec<String>) -> Element {
 	let mut all_countries_signal = use_signal(|| Vec::<CountryOverview>::new());
 	let mut search_text_signal = use_signal(|| "".to_string());
 	let mut sort_by_signal = use_signal(|| SortBy::Population);
@@ -78,10 +79,11 @@ pub fn CountryList() -> Element {
 	*TITLE.write() = "Home".to_string();
 
 	let countries_resource = use_resource(move || async move {
-		reqwest::get(
-			format!(
+		Request::get(
+			&format!(
 				"https://restcountries.com/v3.1/all?fields=flags,name,population,area,region,subregion,cca3,independent,unMember"
 			))
+			.send()
 			.await
 			.unwrap()
 			.json::<Vec<CountryOverview>>()
@@ -105,6 +107,12 @@ pub fn CountryList() -> Element {
 			FilterQuery::Region(&filter_region_signal.read()),
 			FilterQuery::Status(&filter_status_signal.read())
 		])
+	});
+
+	use_effect(move || {
+		let _filtere_countries = filtered_countries();
+		// Reset the pagination to page 0 when list of countries changes
+		page_signal.write().entry(CURRENT_PAGE).and_modify(|p| *p = 0);
 	});
 
 	let count = use_memo(move || {
@@ -207,7 +215,7 @@ pub fn CountryList() -> Element {
 								class: "flex flex-col gap-2",
 								for status in Status::iter() {
 									label {
-										class: "group",
+										class: "group cursor-pointer",
 										for: "{status}",
 										div {
 											class: "h-6 w-6 border-2 border-dark rounded-md inline-block align-middle mr-2 group-has-checked:border-interact group-has-checked:bg-interact",

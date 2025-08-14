@@ -18,7 +18,7 @@ fn Header() -> Element {
 			class: "w-full h-[300px] flex bg-cover z-1",
 			Link {
 				class: "m-auto",
-				to: Route::CountryList,
+				to: Route::CountryList { segments: Vec::<String>::new() },
 				img {
 					src: asset!("/assets/Logo.svg")
 				}

@@ -8,7 +8,7 @@ pub enum SortBy {
 	Area,
 }
 
-#[derive(EnumIter, Display, EnumString, PartialEq, Copy, Clone, serde::Serialize)]
+#[derive(EnumIter, Display, EnumString, PartialEq, Copy, Clone)]
 pub enum Region {
 	Americas,
 	Antarctic,

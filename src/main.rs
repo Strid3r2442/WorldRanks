@@ -8,11 +8,12 @@ use types::CCA3;
 #[derive(Routable, PartialEq, Clone)]
 enum Route {
 	#[layout(Wrapper)]
-	#[route("/")]
-	#[route("/:..segments", |segments: Vec<String>| Route::CountryList)]
-	CountryList,
 	#[route("/:cca3")]
 	CountryDetails { cca3: CCA3 },
+	#[route("/:..segments")]
+	CountryList {
+		segments: Vec<String>
+	},
 }
 
 pub static TITLE:GlobalSignal<String> = Signal::global(|| "Home".to_string());
@@ -60,3 +61,8 @@ fn App() -> Element {
 		Router::<Route> { }
 	}
 }
+
+extern crate wee_alloc;
+
+#[global_allocator]
+static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;

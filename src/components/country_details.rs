@@ -1,4 +1,5 @@
 use dioxus::prelude::*;
+use gloo_net::http::Request;
 use crate::{types::{
 	Country,
 	NeighbouringCountry,
@@ -11,10 +12,11 @@ use crate::Route;
 pub fn CountryDetails(cca3: CCA3) -> Element {
 	let country_resource = use_resource(
 		use_reactive!(|cca3| async move {
-			let vec = reqwest::get(
-				format!(
+			let vec = Request::get(
+				&format!(
 					"https://restcountries.com/v3.1/alpha/{cca3}"
 				))
+				.send()
 				.await
 				.unwrap()
 				.json::<Vec<Country>>()
@@ -40,11 +42,12 @@ pub fn CountryDetails(cca3: CCA3) -> Element {
 							.collect::<Vec<_>>()
 							.join(",");
 
-						let vec = reqwest::get(
-							format!(
+						let vec = Request::get(
+							&format!(
 								"https://restcountries.com/v3.1/alpha?fields=name,flags,cca3&codes={codes}"
 							),
 						)
+						.send()
 						.await
 						.unwrap()
 						.json::<Vec<NeighbouringCountry>>()
